@@ -8,8 +8,8 @@ Grid::Grid(int width, int height, int squareWidth, int squareHeight){
   this->squareWidth = squareWidth;
   this->squareHeight = squareHeight;
   grid.assign(height, std::vector<Square>(width, Square(squareWidth, squareHeight)));
-  for(int y = 0; y < grid.size(); y++){
-    for(int x = 0; x < grid[y].size(); x++){
+  for(uint y = 0; y < grid.size(); y++){
+    for(uint x = 0; x < grid[y].size(); x++){
       grid[y][x].setPosition(squareWidth*x, squareHeight*y);
     }
   }
