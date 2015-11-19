@@ -1,6 +1,5 @@
-#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include <iostream> //cout
+#include "Grid.hpp"
 
 sf::RectangleShape drawRectangle(float x, float y, int width, int height){
   sf::Vector2f temp = sf::Vector2<float>(width, height);
@@ -10,7 +9,11 @@ sf::RectangleShape drawRectangle(float x, float y, int width, int height){
 }
 int main()
 {
-  sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+  int gridWidth = 20;
+  int gridHeight = 20;
+  Grid* myGrid = new Grid(gridWidth, gridHeight, 50, 50);
+
+  sf::RenderWindow window(sf::VideoMode(1000, 1000), "SFML works!");
   sf::CircleShape shape(100.f);
   shape.setFillColor(sf::Color::Green);
 
@@ -39,7 +42,12 @@ int main()
       }
 
       window.clear(); //clear previous shite
-      window.draw(drawRectangle(100,10,50,20));
+      //window.draw(drawRectangle(100,10,50,20));
+      for(int y = 0; y < myGrid->getGrid().size(); y++){
+        for(int x = 0; x < myGrid->getGrid()[y].size(); x++){
+          window.draw(myGrid->getGrid()[y][x].getDrawable());
+        }
+      }
       window.display(); //display new shite
   }
 

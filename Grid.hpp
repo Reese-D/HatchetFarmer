@@ -1,8 +1,8 @@
+#ifndef GRID_H
+#define GRID_H
 #include <iostream>
 #include <vector>
 #include "Square.hpp"
-#ifndef GRID_H
-#define GRID_H
 class Grid{
 public:
   Grid(int height, int width, int squareWidth, int squareHeight);
