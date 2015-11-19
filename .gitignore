@@ -1,3 +1,2 @@
-Grid.o
-Square.o
-Test.out
+*.o
+*.out
