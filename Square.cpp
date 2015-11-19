@@ -7,6 +7,7 @@ Square::Square(int width, int height){
   sf::Color color(255,0,0);
   myRect.setOutlineColor(color);
   myRect.setOutlineThickness(3);
+  myObject = NULL;
 }
 
 void Square::setPosition(int x, int y){
@@ -17,4 +18,12 @@ void Square::setPosition(int x, int y){
 
 sf::RectangleShape Square::getDrawable(){
   return myRect;
+}
+
+void Square::setObject(BoardObject *b){
+  this->myObject = b;
+}
+
+BoardObject* Square::getObject(){
+  return myObject;
 }
