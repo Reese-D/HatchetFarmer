@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+#include "./include/SFML/Graphics.hpp"
 #include <iostream> //cout
 
 //g++ -I/usr/local/Cellar/sfml/2.3_1/include -L/usr/local/Cellar/sfml/2.3_1/lib -lsfml-window -lsfml-graphics -lsfml-system Test.cpp -o Test.out -Wall
