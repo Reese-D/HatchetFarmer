@@ -1,7 +1,13 @@
-#include "./include/SFML/Graphics.hpp"
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <iostream> //cout
 
-//g++ -I/usr/local/Cellar/sfml/2.3_1/include -L/usr/local/Cellar/sfml/2.3_1/lib -lsfml-window -lsfml-graphics -lsfml-system Test.cpp -o Test.out -Wall
+sf::RectangleShape drawRectangle(float x, float y, int width, int height){
+  sf::Vector2f temp = sf::Vector2<float>(width, height);
+  sf::RectangleShape returnVal = sf::RectangleShape(temp);
+  returnVal.setPosition(x, y);
+  return returnVal;
+}
 int main()
 {
   sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
@@ -33,7 +39,7 @@ int main()
       }
 
       window.clear(); //clear previous shite
-      window.draw(shape);
+      window.draw(drawRectangle(100,10,50,20));
       window.display(); //display new shite
   }
 
