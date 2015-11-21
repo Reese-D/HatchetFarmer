@@ -1,5 +1,5 @@
-g++ -c BoardObject.cpp -Wall
-g++ -c Unit.cpp -Wall
+g++ -I./include -c BoardObject.cpp -Wall
+g++ -I./include -c Unit.cpp -Wall 
 g++ -I./include -c Square.cpp -Wall
 g++ -I./include Grid.cpp -c -Wall
 g++ -I./include -L./lib -lsfml-window -lsfml-graphics -lsfml-system GridTest.cpp -o gridTest.out -Wall Grid.o Square.o
