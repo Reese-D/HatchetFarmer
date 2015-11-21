@@ -1,4 +1,4 @@
-#include "boardObject.hpp"
+#include "BoardObject.hpp"
 
 BoardObject::BoardObject(int xInArray, int yInArray){
   this->x = xInArray;

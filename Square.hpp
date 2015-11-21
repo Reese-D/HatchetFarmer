@@ -5,6 +5,7 @@
 class Square{
 public:
   Square(int width, int height);
+  ~Square();  //clean up BoardObject pointer
   void setPosition(int x, int y);
   void setObject(BoardObject *b);
   BoardObject* getObject();

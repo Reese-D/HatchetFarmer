@@ -1,6 +1,6 @@
 #include <SFML/Window.hpp>
 #include "Grid.hpp"
-
+#include "Unit.hpp"
 sf::RectangleShape drawRectangle(float x, float y, int width, int height){
   sf::Vector2f temp = sf::Vector2<float>(width, height);
   sf::RectangleShape returnVal = sf::RectangleShape(temp);

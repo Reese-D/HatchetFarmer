@@ -10,6 +10,10 @@ Square::Square(int width, int height){
   myObject = NULL;
 }
 
+Square::~Square(){
+  delete myObject;
+}
+
 void Square::setPosition(int x, int y){
   this->x = x;
   this->y = y;
