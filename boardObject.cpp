@@ -5,7 +5,6 @@ BoardObject::BoardObject(int xInArray, int yInArray){
   this->y = yInArray;
 }
 
-void BoardObject::setDrawable(sf::Drawable *d){
-  delete myDrawable;  //free old memory
+void BoardObject::setDrawable(std::shared_ptr<sf::Drawable> d){
   myDrawable = d;
 }

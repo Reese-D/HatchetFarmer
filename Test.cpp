@@ -45,7 +45,23 @@ int main()
       //window.draw(drawRectangle(100,10,50,20));
       for(int y = 0; y < myGrid->getGrid().size(); y++){
         for(int x = 0; x < myGrid->getGrid()[y].size(); x++){
-          window.draw(myGrid->getGrid()[y][x].getDrawable());
+          Square currSquare = myGrid->getGrid()[y][x];
+          window.draw(currSquare.getDrawable());
+          currSquare.setObject(std::shared_ptr<Unit>(new Unit(x, y)));
+          std::shared_ptr<Unit> temp = std::dynamic_pointer_cast<Unit>(currSquare.getObject());
+          sf::CircleShape shape = *std::dynamic_pointer_cast<sf::CircleShape>(temp->getDrawable());
+          window.draw(shape);
+          // Unit *temp = (Unit*)currSquare.getObject();
+          // Unit temp4 = *temp;
+          //
+          // Unit *unitptr = new Unit(x,y);
+          // Unit temp5 = *unitptr;
+          // sf::CircleShape myDraw = *((sf::CircleShape *) unitptr->getDrawable());
+          // window.draw(myDraw);
+          //Unit temp5 = *temp;
+          //sf::Drawable *temp1 = temp->getDrawable();
+          //sf::CircleShape *toDraw =  (sf::CircleShape*) myGrid->getGrid()[y][x].getObject()->getDrawable();
+          //window.draw(*temp1);
         }
       }
       window.display(); //display new shite

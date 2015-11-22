@@ -4,12 +4,12 @@
 class BoardObject{
 public:
   BoardObject(int xInArray, int yInArray);
-  virtual ~BoardObject(){delete myDrawable;}; //must have virtual destructor
+  virtual ~BoardObject(){}; //must have virtual destructor
   virtual bool isPassable() =0;
-  virtual void setDrawable(sf::Drawable *d);
-  virtual sf::Drawable* getDrawable(){return myDrawable;};
+  virtual void setDrawable(std::shared_ptr<sf::Drawable> d);
+  virtual std::shared_ptr<sf::Drawable> getDrawable(){return myDrawable;};
 protected:
   int x, y;
-  sf::Drawable *myDrawable;
+  std::shared_ptr<sf::Drawable> myDrawable;
 };
 #endif

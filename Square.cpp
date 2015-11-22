@@ -7,11 +7,9 @@ Square::Square(int width, int height){
   sf::Color color(255,0,0);
   myRect.setOutlineColor(color);
   myRect.setOutlineThickness(3);
-  myObject = NULL;
 }
 
 Square::~Square(){
-  delete myObject;
 }
 
 void Square::setPosition(int x, int y){
@@ -24,10 +22,10 @@ sf::RectangleShape Square::getDrawable(){
   return myRect;
 }
 
-void Square::setObject(BoardObject *b){
+void Square::setObject(std::shared_ptr<BoardObject> b){
   this->myObject = b;
 }
 
-BoardObject* Square::getObject(){
+std::shared_ptr<BoardObject> Square::getObject(){
   return myObject;
 }
