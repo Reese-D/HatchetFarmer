@@ -66,8 +66,8 @@ int main()
   sf::RenderWindow window(sf::VideoMode(1500, 1500), "SFML works!");
   sf::CircleShape shape(100.f);
   shape.setFillColor(sf::Color::Green);
-  (*myGrid->getGrid())[0][0]->setObject(std::shared_ptr<Unit>(new Unit(0, 0, 0*50+23, 0*50+23)));
-  (*myGrid->getGrid())[1][1]->setObject(std::shared_ptr<Unit>(new Unit(1, 1, 1*50+23, 1*50+23)));
+  (*myGrid->getGrid())[0][0]->setObject(std::shared_ptr<Unit>(new Unit(0, 0, 0*50+23, 0*50+23, Unit::Archer)));
+  (*myGrid->getGrid())[1][1]->setObject(std::shared_ptr<Unit>(new Unit(1, 1, 1*50+23, 1*50+23, Unit::Swordsman)));
   while (window.isOpen())
   {
       sf::Event event;
