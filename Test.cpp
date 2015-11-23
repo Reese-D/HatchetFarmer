@@ -5,8 +5,8 @@
 #define SQUARE_WIDTH 50
 #define SQUARE_HEIGHT 50
 
-std::shared_ptr<Unit> temporaryStoredUnit;
-bool stored = false;
+
+
 // #define DECL_TYPE_NAME(x) template<> struct type_name<x> { static const char* name() {return #x;} }
 // template<typename T> struct type_name
 // {
@@ -27,18 +27,36 @@ sf::RectangleShape drawRectangle(float x, float y, int width, int height){
   return returnVal;
 }
 
-void moveUnit(Grid *grid, int fromX, int fromY, int toX, int toY){
-  std::vector<std::vector<std::shared_ptr<Square> > > temporary = *(grid->getGrid());
-  std::shared_ptr<Unit> movingObj = std::dynamic_pointer_cast<Unit>(temporary[fromY][fromX]->getObject());
 
-  //if there isn't already a unit in the spot you want to move to
-  if(temporary[toY][toX]->getObject() == nullptr){
-    temporary[toY][toX]->setObject(movingObj); //set the object to the new spot
-    temporary[fromY][fromX]->setObject(nullptr); //remove the object from the old spot
-    std::dynamic_pointer_cast<sf::CircleShape>(movingObj->getDrawable())
-        ->setPosition(SQUARE_WIDTH * toX+15, SQUARE_HEIGHT * toY+15);
+
+bool stored = false;
+std::shared_ptr<Unit> temporaryStoredUnit;
+std::shared_ptr<Unit> oldStored;
+int canMoveX, canMoveY;
+void moveUnit(std::shared_ptr<Square> clicked, int mouseX, int mouseY){
+  if(stored){
+    if(clicked->getObject() == nullptr){
+      clicked->swapObject(std::move(temporaryStoredUnit)
+          , mouseX/SQUARE_WIDTH*50+23, mouseY/SQUARE_HEIGHT*50+23);
+      stored = false;
+    }else{
+      oldStored = std::move(temporaryStoredUnit);
+      stored = false;
+    }
+  }else{  //no prevoiusly selected unit
+    std::string tempString = "Unit";
+    if(clicked->getObject() != nullptr && tempString.compare(clicked->getObject()->myType()) == 0){
+      oldStored = std::dynamic_pointer_cast<Unit>(clicked->getObject());
+      temporaryStoredUnit = std::move(oldStored);
+      clicked->getObject() = nullptr;
+      stored = true;
+    }
   }
 }
+
+
+
+
 int main()
 {
   int gridWidth = 20;
@@ -49,6 +67,7 @@ int main()
   sf::CircleShape shape(100.f);
   shape.setFillColor(sf::Color::Green);
   (*myGrid->getGrid())[0][0]->setObject(std::shared_ptr<Unit>(new Unit(0, 0, 0*50+23, 0*50+23)));
+  (*myGrid->getGrid())[1][1]->setObject(std::shared_ptr<Unit>(new Unit(1, 1, 1*50+23, 1*50+23)));
   while (window.isOpen())
   {
       sf::Event event;
@@ -71,27 +90,9 @@ int main()
               std::vector<std::vector<std::shared_ptr<Square> > > temp = myGrid->grid;
               temp[event.mouseButton.y/SQUARE_HEIGHT][event.mouseButton.x/SQUARE_WIDTH]->setRectColor(sf::Color(255,0,0));
 
-              if(temporaryStoredUnit == nullptr){
-                      printf("oh fuck...\n");
-              }
               std::shared_ptr<Square> clicked = temp[event.mouseButton.y/SQUARE_HEIGHT][event.mouseButton.x/SQUARE_WIDTH];
-              if(stored){
-                if(clicked->getObject() == nullptr){
-                  clicked->swapObject(std::move(temporaryStoredUnit)
-                      , event.mouseButton.x/SQUARE_WIDTH*50+23, event.mouseButton.y/SQUARE_HEIGHT*50+23);
-                  stored = false;
-                }
-              }else{
-                std::string tempString = "Unit";
-                if(clicked->getObject() != nullptr && tempString.compare(clicked->getObject()->myType()) == 0){
-                  temporaryStoredUnit = std::move(std::dynamic_pointer_cast<Unit>(clicked->getObject()));
-                  clicked->getObject() = nullptr;
-                  stored = true;
-                }
-              }
-              if(temporaryStoredUnit == nullptr){
-                printf("oh fuck...\n");
-              }
+              moveUnit(clicked, event.mouseButton.x, event.mouseButton.y); //move the unit if possibruu
+
             }
             break;
           case sf::Event::MouseButtonReleased:
