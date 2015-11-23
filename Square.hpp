@@ -2,6 +2,7 @@
 #define SQUARE_H
 #include <SFML/Graphics.hpp>
 #include "BoardObject.hpp"
+#include "Unit.hpp"
 class Square{
 public:
   Square(int width, int height);
@@ -9,6 +10,7 @@ public:
   void setPosition(int x, int y);
   void setRectColor(sf::Color c);
   void setObject(std::shared_ptr<BoardObject> b);
+  void swapObject(std::shared_ptr<BoardObject> b, int drawx, int drawy);
   std::shared_ptr<BoardObject> getObject();
   sf::RectangleShape* getDrawable();
 

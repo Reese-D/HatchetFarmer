@@ -8,7 +8,7 @@ public:
     std::shared_ptr<sf::CircleShape> tempDraw =std::shared_ptr<sf::CircleShape>(new sf::CircleShape(DEFAULT_SIZE));
     tempDraw->setFillColor(sf::Color(0,255,0));
     tempDraw->setPosition(drawx,drawy);
-    myDrawable = tempDraw;
+    myDrawable = std::move(tempDraw);
     range = 1;
     health = 100;
     damage = 20;
@@ -20,7 +20,10 @@ public:
   virtual int getMoveRange(){return moveRange;};
   virtual int getAttackRange(){return range;};
   virtual int getHealth(){return health;};
-
+  std::string myType(){return "Unit";};
+  virtual void moveDrawable(int drawx, int drawy){
+    std::dynamic_pointer_cast<sf::CircleShape>(myDrawable)->setPosition(drawx, drawy);
+  };
 protected:
   int range, health, damage, moveRange;
 };

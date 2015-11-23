@@ -32,6 +32,11 @@ void Square::setObject(std::shared_ptr<BoardObject> b){
   this->myObject = b;
 }
 
+void Square::swapObject(std::shared_ptr<BoardObject> b, int drawx, int drawy){
+  this->myObject = b;
+  std::dynamic_pointer_cast<Unit>(myObject)->moveDrawable(drawx, drawy);
+}
+
 std::shared_ptr<BoardObject> Square::getObject(){
   return std::move(myObject);
 }

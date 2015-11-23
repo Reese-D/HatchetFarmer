@@ -1,8 +1,25 @@
 #include <SFML/Window.hpp>
 #include "Grid.hpp"
 #include "Unit.hpp"
+#include <type_traits>
 #define SQUARE_WIDTH 50
 #define SQUARE_HEIGHT 50
+
+std::shared_ptr<Unit> temporaryStoredUnit;
+bool stored = false;
+// #define DECL_TYPE_NAME(x) template<> struct type_name<x> { static const char* name() {return #x;} }
+// template<typename T> struct type_name
+// {
+//     static const char* name() { static_assert(false, "You are missing a DECL_TYPE_NAME"); }
+// };
+//
+// template<> struct type_name<Unit> { static const char* name() {return "Unit";} };
+// template<> struct type_name<Swordsman> { static const char* name() {return "Swordsman";} };
+// template<> struct type_name<Archer> { static const char* name() {return "Archer";} };
+// template<> struct type_name<Building> { static const char* name() {return "Building";} };
+//
+// DECL_TYPE_NAME(Square);
+
 sf::RectangleShape drawRectangle(float x, float y, int width, int height){
   sf::Vector2f temp = sf::Vector2<float>(width, height);
   sf::RectangleShape returnVal = sf::RectangleShape(temp);
@@ -31,7 +48,7 @@ int main()
   sf::RenderWindow window(sf::VideoMode(1500, 1500), "SFML works!");
   sf::CircleShape shape(100.f);
   shape.setFillColor(sf::Color::Green);
-
+  (*myGrid->getGrid())[0][0]->setObject(std::shared_ptr<Unit>(new Unit(0, 0, 0*50+23, 0*50+23)));
   while (window.isOpen())
   {
       sf::Event event;
@@ -53,6 +70,28 @@ int main()
               //
               std::vector<std::vector<std::shared_ptr<Square> > > temp = myGrid->grid;
               temp[event.mouseButton.y/SQUARE_HEIGHT][event.mouseButton.x/SQUARE_WIDTH]->setRectColor(sf::Color(255,0,0));
+
+              if(temporaryStoredUnit == nullptr){
+                      printf("oh fuck...\n");
+              }
+              std::shared_ptr<Square> clicked = temp[event.mouseButton.y/SQUARE_HEIGHT][event.mouseButton.x/SQUARE_WIDTH];
+              if(stored){
+                if(clicked->getObject() == nullptr){
+                  clicked->swapObject(std::move(temporaryStoredUnit)
+                      , event.mouseButton.x/SQUARE_WIDTH*50+23, event.mouseButton.y/SQUARE_HEIGHT*50+23);
+                  stored = false;
+                }
+              }else{
+                std::string tempString = "Unit";
+                if(clicked->getObject() != nullptr && tempString.compare(clicked->getObject()->myType()) == 0){
+                  temporaryStoredUnit = std::move(std::dynamic_pointer_cast<Unit>(clicked->getObject()));
+                  clicked->getObject() = nullptr;
+                  stored = true;
+                }
+              }
+              if(temporaryStoredUnit == nullptr){
+                printf("oh fuck...\n");
+              }
             }
             break;
           case sf::Event::MouseButtonReleased:
@@ -73,7 +112,7 @@ int main()
         for(int x = 0; x < temp[y].size(); x++){
           Square currSquare = *temp[y][x];
           window.draw(*currSquare.getDrawable());
-          currSquare.setObject(std::shared_ptr<Unit>(new Unit(x, y, x*50+23, y*50+23)));
+          // currSquare.setObject(std::shared_ptr<Unit>(new Unit(x, y, x*50+23, y*50+23)));
           if(currSquare.getObject() != nullptr){
             std::shared_ptr<Unit> temp = std::dynamic_pointer_cast<Unit>(currSquare.getObject());
             sf::CircleShape shape = *std::dynamic_pointer_cast<sf::CircleShape>(temp->getDrawable());
