@@ -5,8 +5,9 @@ Square::Square(int width, int height){
   sf::Vector2f temp = sf::Vector2<float>(width, height);
   myRect = sf::RectangleShape(temp);
   sf::Color color(255,0,0);
+  myRect.setFillColor(sf::Color(255,255,255));
   myRect.setOutlineColor(color);
-  myRect.setOutlineThickness(3);
+  myRect.setOutlineThickness(1);
 }
 
 Square::~Square(){
@@ -18,8 +19,13 @@ void Square::setPosition(int x, int y){
   myRect.setPosition(x,y);
 }
 
-sf::RectangleShape Square::getDrawable(){
-  return myRect;
+sf::RectangleShape* Square::getDrawable(){
+  //myRect.setFillColor(sf::Color(255,0,0));
+  return &myRect;
+}
+
+void Square::setRectColor(sf::Color c){
+  myRect.setFillColor(c);
 }
 
 void Square::setObject(std::shared_ptr<BoardObject> b){
@@ -27,5 +33,5 @@ void Square::setObject(std::shared_ptr<BoardObject> b){
 }
 
 std::shared_ptr<BoardObject> Square::getObject(){
-  return myObject;
+  return std::move(myObject);
 }

@@ -8,10 +8,9 @@ public:
   Grid(int height, int width, int squareWidth, int squareHeight);
   int getSquareWidth();
   int getSquareHeight();
-  std::vector< std::vector<Square> > getGrid();
-private:
+  std::vector< std::vector<std::shared_ptr<Square> > >* getGrid();
   int width, height, squareWidth, squareHeight;
-  std::vector< std::vector<Square> > grid;
+  std::vector< std::vector<std::shared_ptr<Square> > > grid;
 protected:
 };
 #endif

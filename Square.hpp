@@ -7,9 +7,11 @@ public:
   Square(int width, int height);
   ~Square();  //clean up BoardObject pointer
   void setPosition(int x, int y);
+  void setRectColor(sf::Color c);
   void setObject(std::shared_ptr<BoardObject> b);
   std::shared_ptr<BoardObject> getObject();
-  sf::RectangleShape getDrawable();
+  sf::RectangleShape* getDrawable();
+
 private:
   int width, height, x, y;
   sf::RectangleShape myRect;
